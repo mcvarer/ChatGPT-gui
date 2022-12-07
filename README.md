@@ -11,3 +11,4 @@ source chat_venv/bin/activate
 pip install -r requirement.txt
 python gui.py
 ```
+![Demo](https://github.com/mcvarer/ChatGPT-gui/blob/master/gif/demo.gif)
