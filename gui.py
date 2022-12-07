@@ -1,8 +1,10 @@
+"""
+Created by MCV 08.12.2022 02:40
+"""
 import os.path
 from tkinter import *
 import customtkinter
 from main import OpenapiOPS
-
 
 customtkinter.set_appearance_mode("System")
 customtkinter.set_default_color_theme("blue")
@@ -11,6 +13,8 @@ customtkinter.set_default_color_theme("blue")
 class App(customtkinter.CTk):
     def __init__(self):
         super().__init__()
+
+        self.opapi = OpenapiOPS()
 
         # configure window
         self.apikey = None
@@ -62,20 +66,24 @@ class App(customtkinter.CTk):
             self.api_key = data['API_KEY']
 
         else:
-            dialog = customtkinter.CTkInputDialog(text="Type in a number:", title="CTkInputDialog")
+            dialog = customtkinter.CTkInputDialog(text="What do you question?", title="Input Prompt")
             self.api_key = dialog.get_input()
             api_key_json = {'API_KEY': self.api_key}
             with open('data.json', 'w', encoding='utf-8') as f:
                 json.dump(api_key_json, f, ensure_ascii=False, indent=4)
 
     def open_input_dialog_event(self):
-        dialog = customtkinter.CTkInputDialog(text="Type in a number:", title="CTkInputDialog")
-        opapi = OpenapiOPS()
-        opapi.api_key = self.api_key
-        response = opapi.chat_prompt(message=dialog.get_input())
-        self.textbox.insert("0.0", "\n")
-        self.textbox.insert("0.0", response)
-        self.textbox.insert("0.0", "\n" + "-----------------------------Finished--------------------------------------")
+        dialog = customtkinter.CTkInputDialog(text="What do you question?", title="Input Prompt")
+
+        self.opapi.api_key = self.api_key
+        message = dialog.get_input()
+
+        if message:
+            response = self.opapi.chat_prompt(message=message)
+            self.textbox.insert("0.0", "\n")
+            self.textbox.insert("0.0", response)
+            self.textbox.insert("0.0",
+                                "\n" + "-----------------------------Finished--------------------------------------")
 
     def sidebar_button_event(self):
         self.textbox.delete("1.0", END)

@@ -1,16 +1,19 @@
+"""
+Created by MCV 08.12.2022 02:40
+"""
 import openai
 
 
-class OpenapiOPS():
+class OpenapiOPS:
 
     def __int__(self, api_key):
-         self.api_key = api_key
+        self.api_key = api_key
 
     def chat_prompt(self, message: str) -> str:
         """
 
         :param message:
-        :return:
+        :return: response from ChatGPT api
         """
         openai.api_key = self.api_key
         chatgpt = openai.Completion.create(
